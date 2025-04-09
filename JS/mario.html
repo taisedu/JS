@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Mario Kart</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: skyblue;
+      font-family: sans-serif;
+    }
+
+    #game {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background: green;
+    }
+
+    #mario {
+      width: 50px;
+      height: 50px;
+      background: red;
+      position: absolute;
+      bottom: 0;
+      left: 100px;
+      border-radius: 10px;
+      transition: bottom 0.3s;
+    }
+
+    #coinCount {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      background: yellow;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .jumping {
+      animation: jump 0.6s ease;
+    }
+
+    @keyframes jump {
+      0% { bottom: 0; }
+      50% { bottom: 150px; }
+      100% { bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="game">
+  <div id="coinCount">Moedas: 0</div>
+  <div id="mario"></div>
+</div>
+
+<script>
+  const mario = document.getElementById('mario');
+  const coinCount = document.getElementById('coinCount');
+  let moedas = 0;
+  let pulando = false;
+
+  function pular() {
+    if (pulando) return;
+
+    pulando = true;
+    mario.classList.add('jumping');
+
+    moedas++;
+    coinCount.textContent = 'Moedas: ' + moedas;
+
+    setTimeout(() => {
+      mario.classList.remove('jumping');
+      pulando = false;
+    }, 600);
+  }
+
+  // Tecla espaço para pular
+  document.addEventListener('keydown', function(event) {
+    if (event.code === 'Space') {
+      pular();
+    }
+  });
+
+  // Clique na tela também faz pular
+  document.addEventListener('click', pular);
+</script>
+
+</body>
+</html>
